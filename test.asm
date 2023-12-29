@@ -1,18 +1,18 @@
-section .data
-  message db 'Hello, World!', 0
+extrn GetStdHandle : proc
+extrn lstrlen : proc
+extrn WriteConsoleA : proc
+extrn ReadConsoleA : proc
 
-section .text
-  global _start
+.const
+STD_INPUT_HANDLE equ -10
+STD_OUTPUT_HANDLE equ -11
 
-_start:
-  ; write the message to stdout
-  mov eax, 4
-  mov ebx, 1
-  mov ecx, message
-  mov edx, 13
-  int 0x80
+.data
+szText db "Hello, World!", 0
+ReadWritten dd 0
+hInput dd 0
+hOutput dd 0
+szBuffer db 128 dup (0)
+textLen dd 0
 
-  ; exit the program
-  mov eax, 1
-  xor ebx, ebx
-  int 0x80
+End
